@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <multiClasses pogoRevision="9.6" name="MKS_MicrovisionIP_RGA" sourcePath="/mntdirect/_segfs/tango/cppserver/vacuum/rga/MKS_MicrovisionIP_RGA" description="This device server will control MKS Microvision IP RGA (Residual Gas Analyser)." filestogenerate="XMI   file,Protected Regions">
+    <classes classname="Socket" sourcePath="../../../protocols/Socket/src">
+      <inheritances classname="Device_4Impl" sourcePath="../../../../templates/AbstractClasses"/>
+      <additionalFiles name="ClientSocket" path="/mntdirect/_segfs/tango/cppserver/protocols/Socket/ClientSocket.cpp"/>
+      <additionalFiles name="SocketAccess" path="/mntdirect/_segfs/tango/cppserver/protocols/Socket/SocketAccess.cpp"/>
+    </classes>
+    <classes classname="MKS_MicrovisionIP_RGA" sourcePath="./" hasDynamic="true">
+      <inheritances classname="Device_4Impl" sourcePath="../../../../templates/AbstractClasses"/>
+      <additionalFiles name="RGAThread" path="/mntdirect/_segfs/tango/tmp/pascal/MKS_MicrovisionIP_RGA/src/RGAThread.cpp"/>
+    </classes>
+    <preferences makefileHome="/segfs/tango/cppserver/env"/>
+  </multiClasses>
+</pogoDsl:PogoSystem>
