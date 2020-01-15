@@ -529,7 +529,8 @@ bool RGAThread::parse_answer(const string & resp)
 		}
 		catch(Tango::DevFailed &e)
 		{
-			Tango::Except::print_exception(e);
+			ERROR_STREAM << "Error filling attr_polling_buffer for attribute " << attr_name << endl
+			             << " is it correctly initialized as externally triggered?" << endl;
 		}
 		catch(...)
 		{
