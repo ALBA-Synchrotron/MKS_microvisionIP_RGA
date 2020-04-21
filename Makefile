@@ -51,22 +51,11 @@ OUTPUT_TYPE = DEVICE
 #OUTPUT_DIR =
 
 #=============================================================================
-# Tango Class list used by project
-#
-SOCKET_CLASS = Socket
-SOCKET_HOME  = ../../../protocols/Socket/src
-
-MKS_MICROVISIONIP_RGA_CLASS = MKS_MicrovisionIP_RGA
-MKS_MICROVISIONIP_RGA_HOME  = ./
-
-
-#=============================================================================
 # INC_DIR_USER is the list of all include path needed by your sources
 #   - for a device server, tango dependencies are automatically appended
 #   - '-I ../include' and '-I .' are automatically appended in all cases
 #
-INC_DIR_USER= -I . \
-              -I $(MKS_MICROVISIONIP_RGA_HOME)
+INC_DIR_USER= -I . 
 
 #=============================================================================
 # LIB_DIR_USER is the list of user library directories
@@ -123,21 +112,26 @@ include $(MAKE_ENV)/tango.opt
 #=============================================================================
 # SVC_OBJS is the list of all objects needed to make the output
 #
-SVC_OBJS =  $(SVC_SOCKET_OBJS) \
-            $(SVC_MKS_MICROVISIONIP_RGA_OBJS) \
-            $(OBJDIR)/main.o
+SVC_INCL =  $(PACKAGE_NAME).h $(PACKAGE_NAME)Class.h 
 
-#------------  Object files for Socket class  ------------
-SVC_SOCKET_OBJS = 
 
-#------------  Object files for MKS_MicrovisionIP_RGA class  ------------
-SVC_MKS_MICROVISIONIP_RGA_OBJS = \
-		$(OBJDIR)/MKS_MicrovisionIP_RGA.o \
-		$(OBJDIR)/MKS_MicrovisionIP_RGAClass.o \
-		$(OBJDIR)/MKS_MicrovisionIP_RGAStateMachine.o \
-		$(OBJDIR)/MKS_MicrovisionIP_RGADynAttrUtils.o \
+SVC_OBJS =      \
+		$(LIB_OBJS) \
+		$(OBJDIR)/ClassFactory.o  \
+        $(OBJDIR)/main.o
+
+LIB_OBJS = \
+        $(OBJDIR)/$(PACKAGE_NAME).o \
+        $(OBJDIR)/$(PACKAGE_NAME)Class.o \
+        $(OBJDIR)/$(PACKAGE_NAME)StateMachine.o \
+		$(OBJDIR)/$(PACKAGE_NAME)DynAttrUtils.o \
+        $(ADDITIONAL_OBJS) 
+
+SVC_INHERITANCE_OBJ =  \
+
+#------------ Object files for additional files ------------
+ADDITIONAL_OBJS = \
 		$(OBJDIR)/RGAThread.o
-
 
 #=============================================================================
 #	include common targets
@@ -145,26 +139,7 @@ SVC_MKS_MICROVISIONIP_RGA_OBJS = \
 include $(MAKE_ENV)/common_target.opt
 
 
-#=============================================================================
-# Following are dependancies of the classes used by project
-#
-#------------  Object files dependancies for Socket class  ------------
-SOCKET_INCLUDES =
 
-#------------  Object files dependancies for MKS_MicrovisionIP_RGA class  ------------
-MKS_MICROVISIONIP_RGA_INCLUDES = \
-		$(MKS_MICROVISIONIP_RGA_HOME)/MKS_MicrovisionIP_RGA.h \
-		$(MKS_MICROVISIONIP_RGA_HOME)/MKS_MicrovisionIP_RGAClass.h
-
-$(OBJDIR)/MKS_MicrovisionIP_RGA.o:  $(MKS_MICROVISIONIP_RGA_HOME)/MKS_MicrovisionIP_RGA.cpp $(MKS_MICROVISIONIP_RGA_INCLUDES)
-	$(CXX) $(CXXFLAGS) -c $< -o $(OBJDIR)/MKS_MicrovisionIP_RGA.o
-$(OBJDIR)/MKS_MicrovisionIP_RGAClass.o:  $(MKS_MICROVISIONIP_RGA_HOME)/MKS_MicrovisionIP_RGAClass.cpp $(MKS_MICROVISIONIP_RGA_INCLUDES)
-	$(CXX) $(CXXFLAGS) -c $< -o $(OBJDIR)/MKS_MicrovisionIP_RGAClass.o
-$(OBJDIR)/MKS_MicrovisionIP_RGAStateMachine.o:  $(MKS_MICROVISIONIP_RGA_HOME)/MKS_MicrovisionIP_RGAStateMachine.cpp $(MKS_MICROVISIONIP_RGA_INCLUDES)
-	$(CXX) $(CXXFLAGS) -c $< -o $(OBJDIR)/MKS_MicrovisionIP_RGAStateMachine.o
-$(OBJDIR)/MKS_MicrovisionIP_RGADynAttrUtils.o:  $(MKS_MICROVISIONIP_RGA_HOME)/MKS_MicrovisionIP_RGADynAttrUtils.cpp $(MKS_MICROVISIONIP_RGA_INCLUDES)
-	$(CXX) $(CXXFLAGS) -c $< -o $(OBJDIR)/MKS_MicrovisionIP_RGADynAttrUtils.o
-$(OBJDIR)/RGAThread.o:  $(MKS_MICROVISIONIP_RGA_HOME)/RGAThread.cpp $(MKS_MICROVISIONIP_RGA_INCLUDES)
+$(OBJDIR)/RGAThread.o:  RGAThread.cpp $(SVC_INCL)
 	$(CXX) $(CXXFLAGS) -c $< -o $(OBJDIR)/RGAThread.o
-
 
