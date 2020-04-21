@@ -14,7 +14,7 @@
 #
 # MAKE_ENV is the path to find common environment to build project
 #
-MAKE_ENV = /segfs/tango/cppserver/env
+MAKE_ENV = env
 
 #=============================================================================
 # PACKAGE_NAME is the name of the library/device/exe you want to build
@@ -66,7 +66,6 @@ MKS_MICROVISIONIP_RGA_HOME  = ./
 #   - '-I ../include' and '-I .' are automatically appended in all cases
 #
 INC_DIR_USER= -I . \
-              -I $(SOCKET_HOME)\
               -I $(MKS_MICROVISIONIP_RGA_HOME)
 
 #=============================================================================
@@ -126,16 +125,10 @@ include $(MAKE_ENV)/tango.opt
 #
 SVC_OBJS =  $(SVC_SOCKET_OBJS) \
             $(SVC_MKS_MICROVISIONIP_RGA_OBJS) \
-            $(OBJDIR)/MultiClassesFactory.o \
             $(OBJDIR)/main.o
 
 #------------  Object files for Socket class  ------------
-SVC_SOCKET_OBJS = \
-		$(OBJDIR)/Socket.o \
-		$(OBJDIR)/SocketClass.o \
-		$(OBJDIR)/SocketStateMachine.o \
-		$(OBJDIR)/ClientSocket.o \
-		$(OBJDIR)/SocketAccess.o
+SVC_SOCKET_OBJS = 
 
 #------------  Object files for MKS_MicrovisionIP_RGA class  ------------
 SVC_MKS_MICROVISIONIP_RGA_OBJS = \
@@ -156,20 +149,7 @@ include $(MAKE_ENV)/common_target.opt
 # Following are dependancies of the classes used by project
 #
 #------------  Object files dependancies for Socket class  ------------
-SOCKET_INCLUDES = \
-		$(SOCKET_HOME)/Socket.h \
-		$(SOCKET_HOME)/SocketClass.h
-
-$(OBJDIR)/Socket.o:  $(SOCKET_HOME)/Socket.cpp $(SOCKET_INCLUDES)
-	$(CXX) $(CXXFLAGS) -c $< -o $(OBJDIR)/Socket.o
-$(OBJDIR)/SocketClass.o:  $(SOCKET_HOME)/SocketClass.cpp $(SOCKET_INCLUDES)
-	$(CXX) $(CXXFLAGS) -c $< -o $(OBJDIR)/SocketClass.o
-$(OBJDIR)/SocketStateMachine.o:  $(SOCKET_HOME)/SocketStateMachine.cpp $(SOCKET_INCLUDES)
-	$(CXX) $(CXXFLAGS) -c $< -o $(OBJDIR)/SocketStateMachine.o
-$(OBJDIR)/ClientSocket.o:  $(SOCKET_HOME)/ClientSocket.cpp $(SOCKET_INCLUDES)
-	$(CXX) $(CXXFLAGS) -c $< -o $(OBJDIR)/ClientSocket.o
-$(OBJDIR)/SocketAccess.o:  $(SOCKET_HOME)/SocketAccess.cpp $(SOCKET_INCLUDES)
-	$(CXX) $(CXXFLAGS) -c $< -o $(OBJDIR)/SocketAccess.o
+SOCKET_INCLUDES =
 
 #------------  Object files dependancies for MKS_MicrovisionIP_RGA class  ------------
 MKS_MICROVISIONIP_RGA_INCLUDES = \
